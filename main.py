@@ -3,8 +3,6 @@ import sys
 from bs4 import BeautifulSoup
 import re
 
-URL = "http://127.0.0.1"
-
 def getHtml(url):
 	res = requests.get(url)
 
@@ -14,9 +12,6 @@ def getHtml(url):
 	
 	else:
 		return res.content.decode()
-
-if len(sys.argv) -1 > 0:
-	URL = sys.argv[1]
 
 def createMap(list: list):
 	map = {}
@@ -30,12 +25,17 @@ def printResults(list: list, length = 10):
 	for x in range(length):
 		print(f"The word {list[x][0]} appears {list[x][1]} times")
 
-rawContent = getHtml(URL)
-html = BeautifulSoup(rawContent, "html.parser")
-text = html.getText()
-allWords = re.findall(r'\w+', text)
+if __name__ == "__main__":
+	URL = "http://127.0.0.1"
+	
+	if len(sys.argv) -1 > 0:
+		URL = sys.argv[1]
+	rawContent = getHtml(URL)
+	html = BeautifulSoup(rawContent, "html.parser")
+	text = html.getText()
+	allWords = re.findall(r'\w+', text)
 
-map = sorted(createMap(allWords).items(), key=lambda item: item[1], reverse=True)
-printResults(map)
+	map = sorted(createMap(allWords).items(), key=lambda item: item[1], reverse=True)
+	printResults(map)
 
 
