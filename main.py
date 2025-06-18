@@ -18,8 +18,16 @@ def getHtml(url):
 if len(sys.argv) -1 > 0:
 	URL = sys.argv[1]
 
+def createMap(list: list):
+	map = {}
+	for item in list:
+		map[item] = map.setdefault(item, 0) + 1
+	return map
+
 rawContent = getHtml(URL)
 html = BeautifulSoup(rawContent, "html.parser")
 text = html.getText()
 allWords = re.findall(r'\w+', text)
+
+map = createMap(allWords)
 
