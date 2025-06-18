@@ -24,10 +24,18 @@ def createMap(list: list):
 		map[item] = map.setdefault(item, 0) + 1
 	return map
 
+def printResults(list: list, length = 10):
+	if length > len(list):
+		length = len(list)
+	for x in range(length):
+		print(f"The word {list[x][0]} appears {list[x][1]} times")
+
 rawContent = getHtml(URL)
 html = BeautifulSoup(rawContent, "html.parser")
 text = html.getText()
 allWords = re.findall(r'\w+', text)
 
-map = createMap(allWords)
+map = sorted(createMap(allWords).items(), key=lambda item: item[1], reverse=True)
+printResults(map)
+
 
