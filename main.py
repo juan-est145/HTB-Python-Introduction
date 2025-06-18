@@ -1,5 +1,7 @@
 import requests
 import sys
+from bs4 import BeautifulSoup
+import re
 
 URL = "http://127.0.0.1"
 
@@ -15,3 +17,9 @@ def getHtml(url):
 
 if len(sys.argv) -1 > 0:
 	URL = sys.argv[1]
+
+rawContent = getHtml(URL)
+html = BeautifulSoup(rawContent, "html.parser")
+text = html.getText()
+allWords = re.findall(r'\w+', text)
+
